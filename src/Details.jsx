@@ -2,6 +2,7 @@ import { Component } from "react";
 import { useParams } from "react-router-dom";
 import Carousel from "./Carousel";
 import ErrorBoundary from "./ErrorBoundary";
+import ThemeContext from "./ThemeContext";
 
 class Details extends Component {
   // constructor(props) {
@@ -39,10 +40,19 @@ class Details extends Component {
         <Carousel images={images} />
         <div>
           <h1>{name}</h1>
-          <h2 className="detail-row">
+          <h2 className="capitalize">
             {animal} | {breed} | {city}, {state}
           </h2>
-          <button>Adopt {name}</button>
+          <ThemeContext.Consumer>
+            {([theme]) => (
+              // theme is being destructured here
+              <button style={{ backgroundColor: theme }}>Adopt {name}</button>
+            )}
+          </ThemeContext.Consumer>
+          {/* 
+            This is how we read context from a class component.
+            before hooks were a thing, used to be a very common pattern
+          */}
           <p>{description}</p>
         </div>
       </div>

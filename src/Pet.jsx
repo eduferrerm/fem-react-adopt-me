@@ -14,7 +14,7 @@ export const Pet = ({ name, animal, breed, images, location, id }) => {
       </div>
       <div className="info">
         <h1>{name}</h1>
-        <h2>
+        <h2 className="capitalize">
           {animal} | {breed} | {location}
         </h2>
       </div>

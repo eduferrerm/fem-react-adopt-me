@@ -1,6 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import useBreedList from "./useBreedList";
 import Results from "./Results";
+import ThemeContext from "./ThemeContext";
 
 const ANIMALS = ["bird", "cat", "dog", "rabbit", "reptile"];
 
@@ -9,6 +10,8 @@ export const SearchParams = () => {
   const [animal, setAnimal] = useState("");
   const [breed, setBreed] = useState("");
   const [breeds] = useBreedList(animal);
+  const [theme] = useContext(ThemeContext);
+  // setTheme is availble to mutate theme value, like useState, [theme, setTheme], we just aren't using it, so no need to declare / destructure it
 
   const [pets, setPets] = useState([]);
 
@@ -71,10 +74,10 @@ export const SearchParams = () => {
           <select
             id="breed"
             name="breed"
-            onChange={(e) => {
+            onChange={() => {
               setBreed("");
             }}
-            onBlur={(e) => {
+            onBlur={() => {
               setBreed("");
             }}
           >
@@ -86,7 +89,7 @@ export const SearchParams = () => {
             ))}
           </select>
         </label>
-        <button>Submit</button>
+        <button style={{ backgroundColor: theme }}>Submit</button>
       </form>
       <Results pets={pets} />
     </div>
