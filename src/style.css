@@ -124,6 +124,10 @@ header {
   padding: 20px 0px 0px 0px;
 }
 
+.details .detail-row {
+  text-transform: capitalize;
+}
+
 .details p {
   line-height: 1.5;
   padding: 0px 15px;

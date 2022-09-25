@@ -3,7 +3,7 @@ import { render } from "react-dom";
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 
 import { SearchParams } from "./SearchParams";
-import Details from "./Details";
+import WrappedDetails from "./Details";
 
 const App = () => {
   return (
@@ -16,7 +16,7 @@ const App = () => {
         </header>
         <Routes>
           <Route path="/" element={<SearchParams />} />
-          <Route path="/details/:id" element={<Details />} />
+          <Route path="/details/:id" element={<WrappedDetails />} />
         </Routes>
       </BrowserRouter>
     </StrictMode>
