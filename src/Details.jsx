@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import Carousel from "./Carousel";
 import ErrorBoundary from "./ErrorBoundary";
 import ThemeContext from "./ThemeContext";
+import Modal from "./Modal";
 
 class Details extends Component {
   // constructor(props) {
@@ -11,7 +12,7 @@ class Details extends Component {
   //   this.state = { loading: true };
   // }
 
-  state = { loading: true }; // with proposal class properties, substitutes constructor
+  state = { loading: true, showModal: false }; // with proposal class properties, substitutes constructor
 
   async componentDidMount() {
     const res = await fetch(
@@ -26,11 +27,13 @@ class Details extends Component {
     */
   }
 
+  toggleModal = () => this.setState({ showModal: !this.state.showModal });
+
   render() {
     if (this.state.loading) {
       return <h2>Loading ...</h2>;
     }
-    const { animal, breed, city, state, description, name, images } =
+    const { animal, breed, city, state, description, name, images, showModal } =
       this.state;
 
     // throw new Error("lmao you crashed"); // Simulate an error
@@ -46,7 +49,12 @@ class Details extends Component {
           <ThemeContext.Consumer>
             {([theme]) => (
               // theme is being destructured here
-              <button style={{ backgroundColor: theme }}>Adopt {name}</button>
+              <button
+                onClick={this.toggleModal}
+                style={{ backgroundColor: theme }}
+              >
+                Adopt {name}
+              </button>
             )}
           </ThemeContext.Consumer>
           {/* 
@@ -54,6 +62,17 @@ class Details extends Component {
             before hooks were a thing, used to be a very common pattern
           */}
           <p>{description}</p>
+          {showModal ? (
+            <Modal>
+              <div>
+                <h1>Would you like to adopt {name} ?</h1>
+                <div className="buttons">
+                  <a href="https://bit.ly/pet-adopt">Yes</a>
+                  <button onClick={this.toggleModal}>No</button>
+                </div>
+              </div>
+            </Modal>
+          ) : null}
         </div>
       </div>
     );
@@ -64,7 +83,7 @@ const WrappedDetails = () => {
   const params = useParams();
   return (
     <ErrorBoundary>
-      <Details params={params} />;
+      <Details params={params} />
     </ErrorBoundary>
   );
 };
