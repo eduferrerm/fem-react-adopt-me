@@ -23,6 +23,7 @@ body {
   margin: 0px 25px 0px 0px;
   padding: 35px 15px 15px 15px;
   float: left;
+  height: max-content;
 }
 
 .search {
@@ -270,6 +271,7 @@ header {
 
   .search-params form {
     margin-bottom: 20px;
+    height: max-content;
   }
 
   .search {
@@ -334,5 +336,14 @@ header {
   .carousel-smaller > img {
     width: 60px;
     height: 60px;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .search-params {
+    display: flex;
+  }
+  .pet {
+    display: flex;
   }
 }
