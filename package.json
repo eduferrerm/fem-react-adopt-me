@@ -7,7 +7,9 @@
     "dev": "parcel src/index.html",
     "format": "prettier --write \"src/**/*.{js,jsx}\"",
     "format:check": "prettier --check \"src/**/*.{js,jsx}\"",
-    "lint": "eslint \"src/**/*.{js,jsx}\" --quiet"
+    "lint": "eslint \"src/**/*.{js,jsx}\" --quiet",
+    "build": "parcel build",
+    "start": "npm -s run build && node dist/backend/index.js"
   },
   "keywords": [],
   "author": "",
@@ -25,6 +27,7 @@
     "process": "^0.11.10"
   },
   "dependencies": {
+    "express": "^4.17.3",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-router-dom": "^6.2.1"
@@ -35,5 +38,19 @@
     "last 2 Safari versions",
     "last 2 Edge versions",
     "last 2 Brave versions"
-  ]
+  ],
+  "targets": {
+    "frontend": {
+      "source": ["src/index.html"],
+      "publicUrl": "/frontend"
+    },
+    "backend": {
+      "source": "server/index.js",
+      "optimize": false,
+      "context": "node",
+      "engines": {
+        "node": ">=16"
+      }
+    }
+  }
 }
