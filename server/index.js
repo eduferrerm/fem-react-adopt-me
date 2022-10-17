@@ -7,7 +7,7 @@ import App from "../src/App";
 const PORT = process.env.PORT || 3000;
 // Best DX would be to serve using hot reloading, otherwise to view changes made you'll have to stop and start server manually
 // Research and implement after tut: https://parceljs.org/features/development/
-// Brian mentios nodeamon
+// Brian mentions nodeamon
 // Also research other SSR techniques with react
 
 const html = fs.readFileSync("dist/frontend/index.html").toString();
