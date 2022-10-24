@@ -1,6 +1,10 @@
-import { Component } from "react";
+import { Component, MouseEvent, ReactNode } from "react";
 
-class Carousel extends Component {
+interface IProps {
+  images: string[]
+}
+
+class Carousel extends Component<IProps> {
   state = {
     active: 0,
   };
@@ -9,11 +13,16 @@ class Carousel extends Component {
     images: ["http://pets-images.dev-apis.com/pets/none.jpg"],
   };
 
-  handleIndexClick = (event) => {
-    // using "handle" in naming is good practice, visually cue that this function is an event handler
-    this.setState({
-      active: +event.target.dataset.index, // "+" unary plus, converts string to number, javascript thing...
-    });
+  handleIndexClick = (event: MouseEvent<HTMLElement>) => {
+    if (!(event.target instanceof HTMLElement)) {
+      return;
+    }
+
+    if (event.target.dataset.index){
+      this.setState({
+        active: +event.target.dataset.index,
+      });
+    } 
   };
 
   render() {
@@ -25,7 +34,6 @@ class Carousel extends Component {
         <img src={images[active]} alt="animal" />
         <div className="carousel-smaller">
           {images.map((photo, idx) => (
-            //elements that are clickable should be wrapped in button or <a> tag or are otherwise inaccesible
             // eslint-disable-next-line
             <img
               onClick={this.handleIndexClick}

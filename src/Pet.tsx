@@ -1,6 +1,17 @@
+import { FunctionComponent } from "react";
 import { Link } from "react-router-dom";
+import { Animal } from "./APIResponsesTypes";
 
-export const Pet = ({ name, animal, breed, images, location, id }) => {
+interface IProps {
+  name: string;
+  animal: Animal;
+  breed: string;
+  images: string[];
+  location: string;
+  id: number;
+}
+
+export const Pet: FunctionComponent<IProps> = ({ name, animal, breed, images, location, id }) => {
   let hero = "http://pet-images.dev-apis.com/pets/none.jpg";
 
   if (images.length) {

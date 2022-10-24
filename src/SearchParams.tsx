@@ -1,29 +1,29 @@
-import { useState, useEffect, useContext } from "react";
-import useBreedList from "./useBreedList";
+import { FunctionComponent, useState, useEffect, useContext } from "react";
 import Results from "./Results";
+import useBreedList from "./useBreedList";
 import ThemeContext from "./ThemeContext";
 
-const ANIMALS = ["bird", "cat", "dog", "rabbit", "reptile"];
+import { PetAPIResponse, Animal, Pet } from "./APIResponsesTypes";
 
-export const SearchParams = () => {
+const ANIMALS: Animal[] = ["bird", "cat", "dog", "rabbit", "reptile"];
+
+export const SearchParams: FunctionComponent = () => {
   const [location, setLocation] = useState("");
-  const [animal, setAnimal] = useState("");
+  const [animal, setAnimal] = useState("" as Animal);
   const [breed, setBreed] = useState("");
+  const [pets, setPets] = useState([] as Pet[]);
   const [breeds] = useBreedList(animal);
   const [theme, setTheme] = useContext(ThemeContext);
-  // setTheme is availble to mutate theme value, like useState, [theme, setTheme], we just aren't using it, so no need to declare / destructure it
-
-  const [pets, setPets] = useState([]);
 
   useEffect(() => {
-    requestPets();
+    void requestPets();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   async function requestPets() {
     const res = await fetch(
       `http://pets-v2.dev-apis.com/pets?animal=${animal}&location=${location}&breed=${breed}`
     );
-    const json = await res.json();
+    const json = (await res.json()) as PetAPIResponse;
 
     setPets(json.pets);
   }
@@ -33,7 +33,7 @@ export const SearchParams = () => {
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          requestPets();
+          void requestPets();
         }}
       >
         <label htmlFor="location">
@@ -53,11 +53,11 @@ export const SearchParams = () => {
             id="animal"
             name="animal"
             onChange={(e) => {
-              setAnimal(e.target.value);
+              setAnimal(e.target.value as Animal);
               setBreed("");
             }}
             onBlur={(e) => {
-              setAnimal(e.target.value);
+              setAnimal(e.target.value as Animal);
               setBreed("");
             }}
           >

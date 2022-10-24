@@ -4,30 +4,36 @@ import Carousel from "./Carousel";
 import ErrorBoundary from "./ErrorBoundary";
 import ThemeContext from "./ThemeContext";
 import Modal from "./Modal";
+import { PetAPIResponse, Animal } from './APIResponsesTypes'
 
-class Details extends Component {
-  // constructor(props) {
-  //   super(props);
-
-  //   this.state = { loading: true };
-  // }
-
-  state = { loading: true, showModal: false }; // with proposal class properties, substitutes constructor
+class Details extends Component<{ params: { id?: string }}> {
+  state = { 
+    loading: true, 
+    showModal: false,
+    animal: "" as Animal,
+    breed: "",
+    city: "",
+    state: "",
+    description: "",
+    name: "",
+    images: [] as string[],
+  };
 
   async componentDidMount() {
+    if (!this.props.params.id) {
+      return;
+    }
+
     const res = await fetch(
       `http://pets-v2.dev-apis.com/pets?id=${this.props.params.id}`
     );
-    const json = await res.json();
+    const json = (await res.json()) as PetAPIResponse;
 
     this.setState({ loading: false, ...json.pets[0] });
-    /*
-      Without spread operator:
-      this.setState(Object.assign({ loading: false }, json.pets[0]));
-    */
   }
 
   toggleModal = () => this.setState({ showModal: !this.state.showModal });
+  adopt = () => (window.location.href = "https://bit.ly/pet-adopt");
 
   render() {
     if (this.state.loading) {
@@ -35,8 +41,6 @@ class Details extends Component {
     }
     const { animal, breed, city, state, description, name, images, showModal } =
       this.state;
-
-    // throw new Error("lmao you crashed"); // Simulate an error
 
     return (
       <div className="details">
@@ -57,17 +61,13 @@ class Details extends Component {
               </button>
             )}
           </ThemeContext.Consumer>
-          {/* 
-            This is how we read context from a class component.
-            before hooks were a thing, used to be a very common pattern
-          */}
           <p>{description}</p>
           {showModal ? (
             <Modal>
               <div>
                 <h1>Would you like to adopt {name} ?</h1>
                 <div className="buttons">
-                  <a href="https://bit.ly/pet-adopt">Yes</a>
+                  <button onClick={this.adopt}>Yes</button>
                   <button onClick={this.toggleModal}>No</button>
                 </div>
               </div>
@@ -80,7 +80,7 @@ class Details extends Component {
 }
 
 const WrappedDetails = () => {
-  const params = useParams();
+  const params = useParams<{ id: string }>();
   return (
     <ErrorBoundary>
       <Details params={params} />
