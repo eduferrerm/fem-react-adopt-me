@@ -1,9 +1,9 @@
 import { render } from "react-dom";
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import { StrictMode, useState } from "react";
-import ThemeContext from "./ThemeContext";
 import { SearchParams } from "./SearchParams";
 import WrappedDetails from "./Details";
+import ThemeContext from "./ThemeContext";
 
 const App = () => {
   const theme = useState("#3d90ff");
