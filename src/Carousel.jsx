@@ -1,6 +1,6 @@
 import { Component } from "react";
 
-class Carousel extends Component {
+export class Carousel extends Component {
   state = {
     active: 0,
   };
@@ -22,7 +22,7 @@ class Carousel extends Component {
 
     return (
       <div className="carousel">
-        <img src={images[active]} alt="animal" />
+        <img src={images[active]} alt="animal" data-testid="hero" />
         <div className="carousel-smaller">
           {images.map((photo, idx) => (
             //elements that are clickable should be wrapped in button or <a> tag or are otherwise inaccesible
@@ -34,6 +34,7 @@ class Carousel extends Component {
               data-index={idx}
               className={idx === active ? "active" : ""}
               alt="animal thumbnail"
+              data-testid={`thumbnail-${idx}`}
             />
           ))}
         </div>
@@ -41,5 +42,3 @@ class Carousel extends Component {
     );
   }
 }
-
-export default Carousel;

@@ -1,6 +1,6 @@
 import { Pet } from "./Pet";
 
-const Results = ({ pets }) => {
+export const Results = ({ pets }) => {
   return (
     <div>
       {!pets.length ? (
@@ -21,5 +21,3 @@ const Results = ({ pets }) => {
     </div>
   );
 };
-
-export default Results;
